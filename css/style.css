@@ -1,0 +1,56 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+
+div {
+    padding: 5px;
+    margin: 5px;
+    border: 1px solid grey;
+}
+
+h1,
+h3 {
+    color: #FFA500;
+}
+
+P {
+    color: orange;
+}
+
+img {
+    width: auto;
+    max-height: 250px;
+}
+
+iframe {
+    max-width: 100%;
+    height: auto;
+}
+
+ul,
+ol {
+    padding-left: 15px;
+}
+
+li {
+    margin-left: 5px;
+}
+
+#app-container {
+    width: 80%;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+
+/*  Descktop  */
+
+@media screen and (max-width: 700px) {
+    #app-container {
+        width: 100%;
+    }
+}
