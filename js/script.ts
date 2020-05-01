@@ -28,16 +28,16 @@ function getMeal() {
 }
 
 
-function render(data:{}){
+function render(meal:{}){
     let app_container: HTMLElement = document.getElementById("app-container");
     let old_meal: HTMLElement = document.getElementById("meal-container");
-    let new_meal: HTMLElement = createMeal(data);
+    let new_meal: HTMLElement = createMeal(meal);
     app_container.replaceChild(new_meal,old_meal);
 }
 
 
 
-function createMeal(datas: {}){
+function createMeal(meal: {}){
     let mealContainer = document.createElement("div");
     mealContainer.setAttribute("id","meal-container");   
     
@@ -45,13 +45,13 @@ function createMeal(datas: {}){
     let  directions = [];
     // Ingredients
     for(let i = 1; i<=20;i++){
-        if(datas[`strMeasure${i}`]=="" || datas[`strMeasure${i}`]==null || datas[`strMeasure${i}`]==" "){
+        if(meal[`strMeasure${i}`]=="" || meal[`strMeasure${i}`]==null || meal[`strMeasure${i}`]==" "){
             continue;
         }
-        ingredients.push(`${datas[`strIngredient${i}`]} - ${datas[`strMeasure${i}`]}`);
+        ingredients.push(`${meal[`strIngredient${i}`]} - ${meal[`strMeasure${i}`]}`);
     }
     // Directions
-    let steps: Array<string> = datas["strInstructions"].split("\r\n");
+    let steps: Array<string> = meal["strInstructions"].split("\r\n");
     steps.forEach((element)=>{
         if(element!=""){
             directions.push(element);
@@ -59,10 +59,10 @@ function createMeal(datas: {}){
     });
     let mealContentHtml = `
         <div class="row">
-            <h2>${datas["strMeal"]}</h2>
+            <h2>${meal["strMeal"]}</h2>
         </div>
         <div class="row" >
-            <image id="meal-image" src="${datas["strMealThumb"]}" />
+            <image id="meal-image" src="${meal["strMealThumb"]}" />
         </div>
         <div class="row">
             <h3>Ingredients</h3>
@@ -79,7 +79,7 @@ function createMeal(datas: {}){
         <div class="row">
             <h3>Video</h3>        
             <div class='embed-container'>
-               <iframe src=${"https://www.youtube.com/embed/"+datas["strYoutube"].slice(32)} frameborder='0' allowfullscreen></iframe>
+               <iframe src=${"https://www.youtube.com/embed/"+meal["strYoutube"].slice(32)} frameborder='0' allowfullscreen></iframe>
             </div>
         </div>
     
