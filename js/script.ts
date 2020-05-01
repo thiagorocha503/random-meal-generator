@@ -77,8 +77,10 @@ function createMeal(datas: {}){
             </ol>            
         </div>
         <div class="row">
-            <h3>Video</h3>
-            <iframe  src=${"https://www.youtube.com/embed/"+datas["strYoutube"].slice(32)}></iframe>
+            <h3>Video</h3>        
+            <div class='embed-container'>
+               <iframe src=${"https://www.youtube.com/embed/"+datas["strYoutube"].slice(32)} frameborder='0' allowfullscreen></iframe>
+            </div>
         </div>
     
     `;
