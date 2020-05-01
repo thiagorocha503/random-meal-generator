@@ -2,7 +2,7 @@
 const API_URL = "https://www.themealdb.com/api/json/v1/1/random.php";
 
 
-function onSend(){
+function onGetMeal(){
     getMeal();
 }
 
@@ -15,13 +15,14 @@ function getMeal() {
                 console.log("> "+ JSON.parse(this.responseText)["meals"][0]);
                 render((JSON.parse(this.responseText))["meals"][0]);
             } else {
+                console.log(`Erro ${this.status}: `);
                 alert("Erro: "+this.responseText);
             }
         }
-
     });
     xmlReq.addEventListener("error",function(ev:ProgressEvent<XMLHttpRequest>){
         alert("Error");
+        console.log("load error");
     });
     xmlReq.send()
 }
@@ -29,7 +30,7 @@ function getMeal() {
 
 function render(data:{}){
     let app_container: HTMLElement = document.getElementById("app-container");
-    let old_meal: HTMLElement = document.getElementById("meal");
+    let old_meal: HTMLElement = document.getElementById("meal-container");
     let new_meal: HTMLElement = createMeal(data);
     app_container.replaceChild(new_meal,old_meal);
 }
@@ -38,7 +39,7 @@ function render(data:{}){
 
 function createMeal(datas: {}){
     let mealContainer = document.createElement("div");
-    mealContainer.setAttribute("id","meal");
+    mealContainer.setAttribute("id","meal-container");
     
     let ingredients = "<ul>";
     for(let i =1; i<=20;i++){
@@ -55,34 +56,27 @@ function createMeal(datas: {}){
     steps.forEach((e)=>{
         if(e!=""){
             modoPrepraro += `<li>${e}</li>`;
-        }
-            
-        
-       
+        }     
     });
-
-    modoPrepraro+="</ol>";
-
-
-    
+    modoPrepraro+="</ol>"; 
     let mealContentHtml = `
-        <div>
-            <h1>${datas["strMeal"]}</h1>
+        <div class="row">
+            <h2>${datas["strMeal"]}</h2>
         </div>
-        <div id="image-container">
-            <image src="${datas["strMealThumb"]}" />
+        <div class="row" >
+            <image id="meal-image" src="${datas["strMealThumb"]}" />
         </div>
-        <div>
+        <div class="row">
             <h3>Ingredients</h3>
             ${ingredients}
            
         </div>
-        <div>
+        <div class="row">
             <h3>Directions</h3>
             ${modoPrepraro}
         </div>
-        <div>
-            <h3>video</h3>
+        <div class="row">
+            <h3>Video</h3>
             <iframe  src=${"https://www.youtube.com/embed/"+datas["strYoutube"].slice(32)}></iframe>
         </div>
     

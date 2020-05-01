@@ -1,6 +1,6 @@
 // Write JavaScript here
 var API_URL = "https://www.themealdb.com/api/json/v1/1/random.php";
-function onSend() {
+function onGetMeal() {
     getMeal();
 }
 function getMeal() {
@@ -13,24 +13,26 @@ function getMeal() {
                 render((JSON.parse(this.responseText))["meals"][0]);
             }
             else {
+                console.log("Erro " + this.status + ": ");
                 alert("Erro: " + this.responseText);
             }
         }
     });
     xmlReq.addEventListener("error", function (ev) {
         alert("Error");
+        console.log("load error");
     });
     xmlReq.send();
 }
 function render(data) {
     var app_container = document.getElementById("app-container");
-    var old_meal = document.getElementById("meal");
+    var old_meal = document.getElementById("meal-container");
     var new_meal = createMeal(data);
     app_container.replaceChild(new_meal, old_meal);
 }
 function createMeal(datas) {
     var mealContainer = document.createElement("div");
-    mealContainer.setAttribute("id", "meal");
+    mealContainer.setAttribute("id", "meal-container");
     var ingredients = "<ul>";
     for (var i = 1; i <= 20; i++) {
         // console.log(">> "+datas[`strMeasure${i}`]);
@@ -48,7 +50,7 @@ function createMeal(datas) {
         }
     });
     modoPrepraro += "</ol>";
-    var mealContentHtml = "\n        <div>\n            <h1>" + datas["strMeal"] + "</h1>\n        </div>\n        <div id=\"image-container\">\n            <image src=\"" + datas["strMealThumb"] + "\" />\n        </div>\n        <div>\n            <h3>Ingredients</h3>\n            " + ingredients + "\n           \n        </div>\n        <div>\n            <h3>Directions</h3>\n            " + modoPrepraro + "\n        </div>\n        <div>\n            <h3>video</h3>\n            <iframe  src=" + ("https://www.youtube.com/embed/" + datas["strYoutube"].slice(32)) + "></iframe>\n        </div>\n    \n    ";
+    var mealContentHtml = "\n        <div class=\"row\">\n            <h2>" + datas["strMeal"] + "</h2>\n        </div>\n        <div class=\"row\" >\n            <image id=\"meal-image\" src=\"" + datas["strMealThumb"] + "\" />\n        </div>\n        <div class=\"row\">\n            <h3>Ingredients</h3>\n            " + ingredients + "\n           \n        </div>\n        <div class=\"row\">\n            <h3>Directions</h3>\n            " + modoPrepraro + "\n        </div>\n        <div class=\"row\">\n            <h3>Video</h3>\n            <iframe  src=" + ("https://www.youtube.com/embed/" + datas["strYoutube"].slice(32)) + "></iframe>\n        </div>\n    \n    ";
     mealContainer.insertAdjacentHTML("beforeend", mealContentHtml);
     return mealContainer;
 }
