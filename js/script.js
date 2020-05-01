@@ -33,24 +33,24 @@ function render(data) {
 function createMeal(datas) {
     var mealContainer = document.createElement("div");
     mealContainer.setAttribute("id", "meal-container");
-    var ingredients = "<ul>";
+    var ingredients = [];
+    var directions = [];
+    // Ingredients
     for (var i = 1; i <= 20; i++) {
-        // console.log(">> "+datas[`strMeasure${i}`]);
         if (datas["strMeasure" + i] == "" || datas["strMeasure" + i] == null || datas["strMeasure" + i] == " ") {
             continue;
         }
-        ingredients += "<li>" + datas["strIngredient" + i] + " - " + datas["strMeasure" + i] + "</li>\n";
+        ingredients.push(datas["strIngredient" + i] + " - " + datas["strMeasure" + i]);
     }
-    ingredients += "</ul>";
-    var modoPrepraro = "<ol>";
+    // Directions
     var steps = datas["strInstructions"].split("\r\n");
-    steps.forEach(function (e) {
-        if (e != "") {
-            modoPrepraro += "<li>" + e + "</li>";
+    steps.forEach(function (element) {
+        if (element != "") {
+            directions.push(element);
         }
     });
-    modoPrepraro += "</ol>";
-    var mealContentHtml = "\n        <div class=\"row\">\n            <h2>" + datas["strMeal"] + "</h2>\n        </div>\n        <div class=\"row\" >\n            <image id=\"meal-image\" src=\"" + datas["strMealThumb"] + "\" />\n        </div>\n        <div class=\"row\">\n            <h3>Ingredients</h3>\n            " + ingredients + "\n           \n        </div>\n        <div class=\"row\">\n            <h3>Directions</h3>\n            " + modoPrepraro + "\n        </div>\n        <div class=\"row\">\n            <h3>Video</h3>\n            <iframe  src=" + ("https://www.youtube.com/embed/" + datas["strYoutube"].slice(32)) + "></iframe>\n        </div>\n    \n    ";
+    var mealContentHtml = "\n        <div class=\"row\">\n            <h2>" + datas["strMeal"] + "</h2>\n        </div>\n        <div class=\"row\" >\n            <image id=\"meal-image\" src=\"" + datas["strMealThumb"] + "\" />\n        </div>\n        <div class=\"row\">\n            <h3>Ingredients</h3>\n            <ul>\n                " + ingredients.map(function (e) { return ("<li>" + e + "</li>"); }).join("") + "\n            </ul>\n        </div>\n        <div class=\"row\">\n            <h3>Directions</h3>\n            <ol>\n                " + directions.map(function (e) { return ("<li>" + e + "</li>"); }).join("") + "\n            </ol>            \n        </div>\n        <div class=\"row\">\n            <h3>Video</h3>\n            <iframe  src=" + ("https://www.youtube.com/embed/" + datas["strYoutube"].slice(32)) + " frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen ></iframe>\n        </div>\n    \n    ";
+    /*<iframe width="560" height="315" src="https://www.youtube.com/embed/Vm9qlgBJmfQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> */
     mealContainer.insertAdjacentHTML("beforeend", mealContentHtml);
     return mealContainer;
 }

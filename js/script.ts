@@ -39,26 +39,24 @@ function render(data:{}){
 
 function createMeal(datas: {}){
     let mealContainer = document.createElement("div");
-    mealContainer.setAttribute("id","meal-container");
+    mealContainer.setAttribute("id","meal-container");   
     
-    let ingredients = "<ul>";
-    for(let i =1; i<=20;i++){
-        // console.log(">> "+datas[`strMeasure${i}`]);
+    let ingredients = [];
+    let  directions = [];
+    // Ingredients
+    for(let i = 1; i<=20;i++){
         if(datas[`strMeasure${i}`]=="" || datas[`strMeasure${i}`]==null || datas[`strMeasure${i}`]==" "){
             continue;
         }
-        ingredients += `<li>${datas[`strIngredient${i}`]} - ${datas[`strMeasure${i}`]}</li>\n`;
+        ingredients.push(`${datas[`strIngredient${i}`]} - ${datas[`strMeasure${i}`]}`);
     }
-    ingredients+= "</ul>";
-
-    let  modoPrepraro = "<ol>";
+    // Directions
     let steps: Array<string> = datas["strInstructions"].split("\r\n");
-    steps.forEach((e)=>{
-        if(e!=""){
-            modoPrepraro += `<li>${e}</li>`;
+    steps.forEach((element)=>{
+        if(element!=""){
+            directions.push(element);
         }     
     });
-    modoPrepraro+="</ol>"; 
     let mealContentHtml = `
         <div class="row">
             <h2>${datas["strMeal"]}</h2>
@@ -68,12 +66,15 @@ function createMeal(datas: {}){
         </div>
         <div class="row">
             <h3>Ingredients</h3>
-            ${ingredients}
-           
+            <ul>
+                ${ingredients.map(e=>(`<li>${e}</li>`)).join("")}
+            </ul>
         </div>
         <div class="row">
             <h3>Directions</h3>
-            ${modoPrepraro}
+            <ol>
+                ${directions.map(e=>(`<li>${e}</li>`)).join("")}
+            </ol>            
         </div>
         <div class="row">
             <h3>Video</h3>
