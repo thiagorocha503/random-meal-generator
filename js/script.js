@@ -1,11 +1,8 @@
-// Write JavaScript here
-var API_URL = "https://www.themealdb.com/api/json/v1/1/random.php";
+var API_KEY = "1";
+var URL_RANDOM_MEAL = "https://www.themealdb.com/api/json/v1/" + API_KEY + "/random.php";
 function onGetMeal() {
-    getMeal();
-}
-function getMeal() {
     var xmlReq = new XMLHttpRequest();
-    xmlReq.open("GET", API_URL, true);
+    xmlReq.open("GET", URL_RANDOM_MEAL, true);
     xmlReq.addEventListener("load", function (ev) {
         if (this.readyState == 4) {
             if (this.status >= 200 && this.status < 300) {
@@ -24,83 +21,36 @@ function getMeal() {
     });
     xmlReq.send();
 }
-function render(data) {
+function render(meal) {
     var app_container = document.getElementById("app-container");
     var old_meal = document.getElementById("meal-container");
-    var new_meal = createMeal(data);
+    var new_meal = createMeal(meal);
     app_container.replaceChild(new_meal, old_meal);
 }
-function createMeal(datas) {
+function createMeal(meal) {
     var mealContainer = document.createElement("div");
     mealContainer.setAttribute("id", "meal-container");
     var ingredients = [];
     var directions = [];
     // Ingredients
     for (var i = 1; i <= 20; i++) {
-        if (datas["strMeasure" + i] == "" || datas["strMeasure" + i] == null || datas["strMeasure" + i] == " ") {
+        if (meal["strMeasure" + i] == "" || meal["strMeasure" + i] == null || meal["strMeasure" + i] == " ") {
             continue;
         }
-        ingredients.push(datas["strIngredient" + i] + " - " + datas["strMeasure" + i]);
+        ingredients.push(meal["strIngredient" + i] + " - " + meal["strMeasure" + i]);
     }
     // Directions
-    var steps = datas["strInstructions"].split("\r\n");
+    var steps = meal["strInstructions"].split("\r\n");
     steps.forEach(function (element) {
         if (element != "") {
             directions.push(element);
         }
     });
-    var mealContentHtml = "\n        <div class=\"row\">\n            <h2>" + datas["strMeal"] + "</h2>\n        </div>\n        <div class=\"row\" >\n            <image id=\"meal-image\" src=\"" + datas["strMealThumb"] + "\" />\n        </div>\n        <div class=\"row\">\n            <h3>Ingredients</h3>\n            <ul>\n                " + ingredients.map(function (e) { return ("<li>" + e + "</li>"); }).join("") + "\n            </ul>\n        </div>\n        <div class=\"row\">\n            <h3>Directions</h3>\n            <ol>\n                " + directions.map(function (e) { return ("<li>" + e + "</li>"); }).join("") + "\n            </ol>            \n        </div>\n        <div class=\"row\">\n            <h3>Video</h3>        \n            <div class='embed-container'>\n               <iframe src=" + ("https://www.youtube.com/embed/" + datas["strYoutube"].slice(32)) + " frameborder='0' allowfullscreen></iframe>\n            </div>\n        </div>\n    \n    ";
+    var mealContentHtml = "\n        <div class=\"row\">\n            <h2>" + meal["strMeal"] + "</h2>\n        </div>\n        <div class=\"row\" >\n            <image id=\"meal-image\" src=\"" + meal["strMealThumb"] + "\" />\n        </div>\n        <div class=\"row\">\n            <h3>Ingredients</h3>\n            <ul>\n                " + ingredients.map(function (e) { return ("<li>" + e + "</li>"); }).join("") + "\n            </ul>\n        </div>\n        <div class=\"row\">\n            <h3>Directions</h3>\n            <ol>\n                " + directions.map(function (e) { return ("<li>" + e + "</li>"); }).join("") + "\n            </ol>            \n        </div>\n        <div class=\"row\">\n            <h3>Video</h3>        \n            <div class='embed-container'>\n               <iframe src=" + ("https://www.youtube.com/embed/" + meal["strYoutube"].slice(32)) + " frameborder='0' allowfullscreen></iframe>\n            </div>\n        </div>\n    \n    ";
     mealContainer.insertAdjacentHTML("beforeend", mealContentHtml);
     return mealContainer;
 }
 /*
-
-<div id="app-container">
-        <div>
-            <h1>Receita título</h1>
-        </div>
-        <div id="image-container">
-            <image src="https://img.itdg.com.br/tdg/images/recipes/000/001/634/50999/50999_original.jpg?mode=crop&width=710&height=400" />
-            <div style="text-align:right; padding:0;">
-                <span>Receita image</span>
-            </div>
-        </div>
-        <div>
-            <ul>
-                <li>A - nivel</li>
-                <li>B - ####</li>
-                <li>C - ####</li>
-            </ul>
-        </div>
-        <div>
-            <h3>Ingredientes</h3>
-            <ul>
-                <li>Ingrediente 01 </li>
-                <li>Ingrediente 02 </li>
-                <li>Ingrediente 03 </li>
-                <li>Ingrediente 05 </li>
-                <li>Ingrediente 06 </li>
-            </ul>
-        </div>
-        <div>
-            <h3>Modo de preparo</h3>
-            <ol>
-                <li>step </li>
-                <li>step </li>
-                <li>step </li>
-                <li>step </li>
-                <li>step </li>
-            </ol>
-        </div>
-        <div>
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/TcwEUkntHHU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-
-    </div>
-
-*/
-/*
-
 {
   "meals": [
     {

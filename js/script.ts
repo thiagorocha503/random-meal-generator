@@ -1,14 +1,10 @@
-// Write JavaScript here
-const API_URL = "https://www.themealdb.com/api/json/v1/1/random.php";
+const API_KEY: string = "1";
+const URL_RANDOM_MEAL: string = `https://www.themealdb.com/api/json/v1/${API_KEY}/random.php`;
 
 
-function onGetMeal(){
-    getMeal();
-}
-
-function getMeal() {
+function onGetMeal(){  
     let xmlReq: XMLHttpRequest = new XMLHttpRequest();
-    xmlReq.open("GET",API_URL,true);
+    xmlReq.open("GET",URL_RANDOM_MEAL,true);
     xmlReq.addEventListener("load",function(ev:ProgressEvent<XMLHttpRequest>){
         if(this.readyState == 4){
             if(this.status >=200 && this.status < 300){
@@ -88,57 +84,7 @@ function createMeal(meal: {}){
     return mealContainer;
 
 }
-
-
-/*  
-
-<div id="app-container">
-        <div>
-            <h1>Receita título</h1>
-        </div>
-        <div id="image-container">
-            <image src="https://img.itdg.com.br/tdg/images/recipes/000/001/634/50999/50999_original.jpg?mode=crop&width=710&height=400" />
-            <div style="text-align:right; padding:0;">
-                <span>Receita image</span>
-            </div>
-        </div>
-        <div>
-            <ul>
-                <li>A - nivel</li>
-                <li>B - ####</li>
-                <li>C - ####</li>
-            </ul>
-        </div>
-        <div>
-            <h3>Ingredientes</h3>
-            <ul>
-                <li>Ingrediente 01 </li>
-                <li>Ingrediente 02 </li>
-                <li>Ingrediente 03 </li>
-                <li>Ingrediente 05 </li>
-                <li>Ingrediente 06 </li>
-            </ul>
-        </div>
-        <div>
-            <h3>Modo de preparo</h3>
-            <ol>
-                <li>step </li>
-                <li>step </li>
-                <li>step </li>
-                <li>step </li>
-                <li>step </li>
-            </ol>
-        </div>
-        <div>
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/TcwEUkntHHU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-
-    </div>
-
-*/
-
 /*
-
 {
   "meals": [
     {
