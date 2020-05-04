@@ -45,6 +45,12 @@ header h1 {
     color: white;
 }
 
+#logo {
+    height: 30px;
+    width: 30px;
+    vertical-align: middle;
+}
+
 h2,
 h3 {
     color: #FFA500;
