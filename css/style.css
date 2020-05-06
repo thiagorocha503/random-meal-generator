@@ -64,7 +64,6 @@ h3 {
 
 #app-container {
     margin: 10px 15px 10px 15px;
-    /* border: 1px solid grey; */
 }
 
 #meal-container {
@@ -94,18 +93,12 @@ div p {
     background-color: orange;
     color: white;
     padding: 10px;
-    width: 80px;
     border-radius: 3px;
     cursor: pointer;
 }
 
 #button-get-meal:hover {
     opacity: 0.8;
-}
-
-#meal-image {
-    width: auto;
-    max-height: 300px;
 }
 
 #heart-emoji {
@@ -141,11 +134,16 @@ h1 {
 
 /* Destop     */
 
-@media screen and (min-width: 700px) {
+@media only screen and (min-width: 768px) {
     #app-container {
         width: 50%;
         margin-left: auto;
         margin-right: auto;
+    }
+    #meal-image {
+        width: auto;
+        min-height: 300px;
+        max-height: 400px;
     }
 }
 
@@ -216,8 +214,10 @@ button:not(:active):after {
 }
 
 
-/* fixes initial animation run, without user input, on page load.
-   */
+/* 
+   fixes initial animation run, without user input, on page load.
+   
+*/
 
 button:after {
     visibility: hidden;
